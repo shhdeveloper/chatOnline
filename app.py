@@ -1,4 +1,3 @@
-
 import json
 import requests
 
@@ -22,23 +21,26 @@ with open(file_path, 'w') as file:
 with open(file_path, 'r') as file:
     cyclic_data = json.load(file)
 
-# Define the URL to which you want to send the data
-url = "https://example.com/api/endpoint"
+# Define the URL of your web service
+url = "https://gorgeous-lime-seagull.cyclic.app/api/data"  # Replace with your actual URL
 
-# Prepare the data as JSON
+# Send a POST request with JSON data
 data_to_send = {
     "cyclic_data": cyclic_data
 }
 
-# Send a POST request with JSON data
 response = requests.post(url, json=data_to_send)
 
 # Check the response
 if response.status_code == 200:
     print("Data sent successfully")
+
+    # Retrieve the list of saved data from the response
+    response_data = response.json()
+    saved_data = response_data.get("saved_data", [])
+    print("List of saved data:", saved_data)
 else:
     print(f"Error: {response.status_code}")
-
 
 
 
